@@ -3,26 +3,19 @@
 
 use std::fmt::{Display, Formatter};
 
-use uuid::Uuid;
-
 pub const UNKNOWN_PROTOCOL: i32 = -1;
 
 /// Main context for a network connection.
 ///
 /// This context stores:
 /// - The protocol phase of the connection
-/// - The protocol version of the connection
+/// - The protocol version of the connection or `-1` if unknown
 /// - The timestamp from the last keepalive check
-/// - A uuid (optional) of the player identified with the connection.
 ///
 /// # Note
 /// This could be moved to a higher crate such as the logic core crates.
-///
-/// (For example clients might want to have a plain `Uuid` instead of an
-/// `Option<Uuid>`)
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub struct NetworkState {
-    pub uuid: Option<Uuid>,
     pub keepalive: u64,
     pub protocol: i32,
     pub phase: Phase,
@@ -35,7 +28,6 @@ impl Display for NetworkState {
 impl NetworkState {
     pub fn new(protocol: i32) -> NetworkState {
         NetworkState {
-            uuid: None,
             keepalive: 0,
             protocol,
             phase: Phase::Handshake,

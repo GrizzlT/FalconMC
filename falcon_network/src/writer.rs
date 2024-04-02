@@ -21,6 +21,7 @@ const MAX_PACKET_LEN: usize = 2usize.pow(21) - 1; // maximum value of a 3 byte V
 /// compression and encryption when enabled.
 /// This buffer implements [`BufMut`] for writing
 /// and [`Buf`] for reading.
+#[derive(Debug)]
 pub struct McWriter {
     input: [u8; BUF_LEN],
     input_len: usize,
@@ -230,6 +231,7 @@ fn write_var32_unchecked(value: i32, buf: &mut [u8]) {
     }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 enum WriteLength {
     One,
     Two,
@@ -237,6 +239,7 @@ enum WriteLength {
 
 /// A buffer that transparently applies
 /// compression when necessary. Behaves like [`Write`].
+#[derive(Debug)]
 struct CompressionBuffer {
     buffer: ZlibEncoder<Writer<BytesMut>>,
     compressed: bool,

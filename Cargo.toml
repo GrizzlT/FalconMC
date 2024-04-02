@@ -6,6 +6,9 @@ members = [
     "falcon_protocol/falcon_*",
 ]
 
+[workspace.dependencies]
+syn = "2.0.18"
+
 [profile.release]
 # lto = true
 # codegen-units = 1
